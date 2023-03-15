@@ -101,7 +101,7 @@ function AccountForm() {
      {
       required:"mobile is required",
          pattern:{
-             value: /^[6-9]\d{9}$/gi,
+             value: /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/,
              message: "invalid mobile number"
          }
       }
