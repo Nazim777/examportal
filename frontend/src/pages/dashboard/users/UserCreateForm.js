@@ -28,7 +28,7 @@ function UserCreateForm({setModalIsOpen,fetchUsers}) {
 
     async function createUser(formVal){
           try{
-            let result = await axios.post("http://localhost:5000/api/v1/register",formVal,{withCredentials:true});
+            let result = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/register",formVal,{withCredentials:true});
             if(result.data.success===true){
                 toast.success("user successfully created");
                 setModalIsOpen(false);

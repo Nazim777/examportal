@@ -17,9 +17,9 @@ function ExamDetailsPage() {
     },[params])
     async function handleExam(id){
         try{
-           const {data} = await axios.get("http://localhost:5000/api/v1/exams",{withCredentials:true});
+           const {data} = await axios.get("https://examportal-production-727d.up.railway.app/api/v1/exams",{withCredentials:true});
            const val = data.exams.find(exam=>exam._id===id);
-           const res = await axios.post(`http://localhost:5000/api/v1/exam/${id}`,{exampass:val.exampass},{withCredentials:true});
+           const res = await axios.post(`https://examportal-production-727d.up.railway.app/api/v1/exam/${id}`,{exampass:val.exampass},{withCredentials:true});
            const finalRes = res.data;
           if(finalRes.success===true){
             const newArr = finalRes.exam.questions.map(q=>{

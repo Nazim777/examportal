@@ -18,7 +18,7 @@ function ResultTable({ resultData, getTableDataAsync, resCount }) {
         const value = window.confirm("Are you sure you want to delete this exam with id " + id);
         if (value === true) {
             try {
-                const res = await axios.post("http://localhost:5000/api/v1/result/delete",{ id },{withCredentials:true});
+                const res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/result/delete",{ id },{withCredentials:true});
                 if (res.data.success === true) {
                     toast.success("result deleted successfully");
                     getTableDataAsync()

@@ -36,7 +36,7 @@ function Exam() {
   async function examFetchQuestions(o){
     const {exampass} = o.exampass;
     try{
-      const res = await axios.post(`http://localhost:5000/api/v1/exam/${o.id}`,{exampass},{withCredentials:true});
+      const res = await axios.post(`https://examportal-production-727d.up.railway.app/api/v1/exam/${o.id}`,{exampass},{withCredentials:true});
       dispatch(questionSuccess(res.data));
       navigate(`${pathname}/start`,{replace:true});
 

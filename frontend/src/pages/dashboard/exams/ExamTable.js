@@ -16,7 +16,7 @@ function ExamTable({exams,examCountRef,fetchAllExams}) {
     console.log(value);
     if(value===true){
         try{
-            const res = await axios.delete(`http://localhost:5000/api/v1/exam/${id}`,{withCredentials:true});
+            const res = await axios.delete(`https://examportal-production-727d.up.railway.app/api/v1/exam/${id}`,{withCredentials:true});
               toast.success(res.data.sucessMessage);
               fetchAllExams();
            }catch(err){

@@ -18,7 +18,7 @@ function UserTable(props) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   async function handleChange(e, id) {
     try {
-      let res = await axios.put(`http://localhost:5000/api/v1/user/${id}`, { role: e.target.value },{withCredentials:true});
+      let res = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/user/${id}`, { role: e.target.value },{withCredentials:true});
       if (res.data.success === true) {
         toast.success("user role updated");
         fetchUsers()
@@ -35,7 +35,7 @@ function UserTable(props) {
     const isDelete = window.confirm(`do you really want  to delete this user with id: ${id}`);
     if (isDelete === true) {
       try {
-        let res = await axios.delete(`http://localhost:5000/api/v1/deleteuser/${id}`,{withCredentials:true});
+        let res = await axios.delete(`https://examportal-production-727d.up.railway.app/api/v1/deleteuser/${id}`,{withCredentials:true});
         if (res.data.success === true) {
           toast.success("user deleted successfully");
           fetchUsers()

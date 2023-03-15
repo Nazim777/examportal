@@ -17,7 +17,7 @@ function UserHomePage() {
     },[])
     async function fetchUsers() {
         try{
-            let res = await axios.post("http://localhost:5000/api/v1/users","",{withCredentials:true});
+            let res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/users","",{withCredentials:true});
             if(res.data.success===true) {
                 setCount(res.data.totalUsers);
                 const filtered = res.data.users.filter(user=>user.userId!==username);

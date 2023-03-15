@@ -37,7 +37,7 @@ function ExamForm() {
     async function newExamPost(edata,str){
         if(str==="NEW"){
             try{
-                const res = await axios.post("http://localhost:5000/api/v1/exam/new",edata,{withCredentials:true});
+                const res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/exam/new",edata,{withCredentials:true});
                 console.log(res.data);
                 if(res.data.success){
                     toast.success("successfully added exam");
@@ -49,14 +49,14 @@ function ExamForm() {
         }else if(str==="EDIT" && hasId!==null){
                try{
                   if(edata.questions){
-                    const res = await axios.put(`http://localhost:5000/api/v1/exam/${hasId}`,{...edata,count:edata.questions.length},{withCredentials:true});
+                    const res = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/exam/${hasId}`,{...edata,count:edata.questions.length},{withCredentials:true});
                     console.log(res.data);
                     if(res.data.success){
                     toast.success("successfully updated exam");
                     navigate(-1);
                   }
                   }else{
-                    const res = await axios.put(`http://localhost:5000/api/v1/exam/${hasId}`,edata,{withCredentials:true});
+                    const res = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/exam/${hasId}`,edata,{withCredentials:true});
                     console.log(res.data);
                     if(res.data.success){
                     toast.success("successfully updated exam");

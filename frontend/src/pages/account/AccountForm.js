@@ -40,7 +40,7 @@ function AccountForm() {
     let newData = {...data,avatar};
     try{
       const id = toast.loading("Updating....Please wait",{autoClose:3000})
-      const data = await axios.put(`http://localhost:5000/api/v1/updateuser/${userId}`,newData,{withCredentials:true});
+      const data = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/updateuser/${userId}`,newData,{withCredentials:true});
       const rightuser = data.data;
       // console.log(data.data);
       dispatch(loginSuccess(rightuser));
