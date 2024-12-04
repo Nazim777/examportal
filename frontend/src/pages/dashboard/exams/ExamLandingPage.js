@@ -11,7 +11,7 @@ function ExamLandingPage() {
   const fetchAllExams = useCallback(async() => {
      
     try{
-      const res = await axios.get("https://examportal-production-727d.up.railway.app/api/v1/exams",{withCredentials:true});
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/exams`,{withCredentials:true});
       if(res.data.success===true){
         examCountRef.current = res.data.totalExams
         setExams(res.data.exams);

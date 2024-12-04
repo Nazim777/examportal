@@ -90,7 +90,7 @@ function ExamPage() {
 
     async function createResult(resObj){
       try{
-      let res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/result/new",resObj,{withCredentials:true});
+      let res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/result/new`,resObj,{withCredentials:true});
       if(res.data.success===true){
        navigate("/");
        toast.success("successfully exam given");

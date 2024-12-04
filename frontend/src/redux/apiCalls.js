@@ -10,7 +10,7 @@ import {exampassRemove} from './examStartSlice';
 export let login = async(dispatch,user) => { 
     dispatch(loginStart());
     try{
-        const res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/login",user,{withCredentials:true});
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`,user,{withCredentials:true});
         dispatch(loginSuccess(res.data));
         window.localStorage.setItem("user",JSON.stringify(res.data));
         toast.success(`welcome,${res.data.user.userId}`);
@@ -25,7 +25,7 @@ export let logout = async(dispatch) =>{
        dispatch(exampassRemove());
        dispatch(examfetchRemove());
     try{
-        await axios.get("https://examportal-production-727d.up.railway.app/api/v1/logout",{withCredentials:true});
+        await axios.get(`${process.env.REACT_APP_BACKEND_URL}/logout`,{withCredentials:true});
         dispatch(logoutSuccess());
         window.localStorage.removeItem("user");
         toast.success("logout successful")
@@ -38,7 +38,7 @@ export let logout = async(dispatch) =>{
 export let fetchexams = async(dispatch) =>{
     dispatch(examfetchStart())
     try{
-        const res = await axios.get("https://examportal-production-727d.up.railway.app/api/v1/exams",{withCredentials:true});
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/exams`,{withCredentials:true});
         dispatch(examfetchSuccess(res.data))
     }catch(err){
         dispatch(examfetchFailure());
@@ -48,7 +48,7 @@ export let fetchexams = async(dispatch) =>{
 
 export let questionsfetch = async(dispatch,obj) =>{
     try{
-        const res = await axios.post(`https://examportal-production-727d.up.railway.app/api/v1/exam/${obj.id}`,{exampass:obj.exampass},{withCredentials:true});
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/exam/${obj.id}`,{exampass:obj.exampass},{withCredentials:true});
         dispatch(questionSuccess(res.data));
     }catch(err){
         toast.error(`${err.response.data.message}`);

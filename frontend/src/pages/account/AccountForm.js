@@ -40,7 +40,7 @@ function AccountForm() {
     let newData = {...data,avatar};
     try{
       const id = toast.loading("Updating....Please wait",{autoClose:3000})
-      const data = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/updateuser/${userId}`,newData,{withCredentials:true});
+      const data = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/updateuser/${userId}`,newData,{withCredentials:true});
       const rightuser = data.data;
       // console.log(data.data);
       dispatch(loginSuccess(rightuser));
@@ -111,12 +111,12 @@ function AccountForm() {
 
       
         <div className="button-wrap">
-        <label htmlFor="upload" style={{display:'block',margin:"1rem",textAlign:"center",color:"#0b2e66",fontWeight:"600"}}>upload picture</label>
-        <input
+        {/* <label htmlFor="upload" style={{display:'block',margin:"1rem",textAlign:"center",color:"#0b2e66",fontWeight:"600"}}>upload picture</label> */}
+        {/* <input
        onChange={fileChangedHandler}
         id="upload"
         accept='image/*'
-         type="file"/>
+         type="file"/> */}
       </div>
       
       <button type="submit"

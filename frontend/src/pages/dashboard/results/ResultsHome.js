@@ -11,7 +11,7 @@ function ResultsHome() {
   
   const getTableDataAsync = useCallback(async ()=>{
     try{
-        const res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/results","",{withCredentials:true});
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/results`,"",{withCredentials:true});
         if(res.data.success===true){
             mapResData(res.data)
           }else{

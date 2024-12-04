@@ -17,7 +17,7 @@ function UpdatePassword() {
       setDisabled(true)
       try{
       const id = toast.loading("Updating....Please wait",{autoClose:3000})
-      await axios.put("https://examportal-production-727d.up.railway.app/api/v1/password/update",val,{withCredentials:true});
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/password/update`,val,{withCredentials:true});
       toast.update(id, {autoClose:3000, render: "Updated Successfully", type: "success", isLoading: false });
       logout(dispatch);
       }catch(err){

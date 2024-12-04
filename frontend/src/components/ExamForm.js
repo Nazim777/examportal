@@ -13,6 +13,8 @@ function ExamForm() {
     const [manualQuestion,setManualQuestion] = useState({})
     const navigate = useNavigate();
 
+    console.log('examdata',examdata)
+
     useEffect(() => {
         if(params.examId){
             setHasId(params.examId)
@@ -37,7 +39,7 @@ function ExamForm() {
     async function newExamPost(edata,str){
         if(str==="NEW"){
             try{
-                const res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/exam/new",edata,{withCredentials:true});
+                const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/exam/new`,edata,{withCredentials:true});
                 console.log(res.data);
                 if(res.data.success){
                     toast.success("successfully added exam");
@@ -49,14 +51,14 @@ function ExamForm() {
         }else if(str==="EDIT" && hasId!==null){
                try{
                   if(edata.questions){
-                    const res = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/exam/${hasId}`,{...edata,count:edata.questions.length},{withCredentials:true});
+                    const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/exam/${hasId}`,{...edata,count:edata.questions.length},{withCredentials:true});
                     console.log(res.data);
                     if(res.data.success){
                     toast.success("successfully updated exam");
                     navigate(-1);
                   }
                   }else{
-                    const res = await axios.put(`https://examportal-production-727d.up.railway.app/api/v1/exam/${hasId}`,edata,{withCredentials:true});
+                    const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/exam/${hasId}`,edata,{withCredentials:true});
                     console.log(res.data);
                     if(res.data.success){
                     toast.success("successfully updated exam");
@@ -94,11 +96,13 @@ function ExamForm() {
             }
         })
         promise.then(d=>{
+            console.log('d',d)
             makeQuestionsObj(d)
         })
     }
 
     function makeQuestionsObj(arr){
+        console.log('arr',arr)
         const newArr = arr.map(o=>{
             if(o.question && o.option1 && o.option2 && o.option3 && o.option4 && o.answer){
                 return {
@@ -174,7 +178,7 @@ function ExamForm() {
             <br />
             <input type="number" placeholder="exam durations(minutes)" onChange={handleInputChange} name="durations" min="5" max="500" required />
             <br />
-            <label htmlFor="file">upload excel file</label>
+            {/* <label htmlFor="file">upload excel file</label>
             <br />
             <input type="file" id="file" onChange={(e)=>{
                 const file = e.target.files[0]
@@ -183,7 +187,7 @@ function ExamForm() {
                 }else{
                     window.alert("please upload a valid xlsx file");
                 }
-            }} />
+            }} /> */}
         </form>
         </div>
         <div className="secondForm">

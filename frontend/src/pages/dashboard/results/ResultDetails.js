@@ -17,7 +17,7 @@ function ResultDetails() {
 
   async function getSingleResult(id) {
     try {
-      let res = await axios.post("https://examportal-production-727d.up.railway.app/api/v1/result/get", { id },{withCredentials:true});
+      let res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/result/get`, { id },{withCredentials:true});
       if (res.data.success === true) {
         let answersheet = res.data.result.answersheet        
         let ques = res.data.result.exam.questions;
