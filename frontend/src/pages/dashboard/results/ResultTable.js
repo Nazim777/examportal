@@ -70,7 +70,7 @@ function ResultTable({ resultData, getTableDataAsync, resCount }) {
             accessor: "Examname"
         },
         {
-            Header: "Student Name",
+            Header: "Student UserId",
             accessor: "Studentname"
         },
         {

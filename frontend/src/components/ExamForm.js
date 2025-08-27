@@ -72,34 +72,79 @@ function ExamForm() {
         }
     }
 
+    // function readExcel1(file) {
+    //     const promise = new Promise((resolve, reject) =>{
+    //         const fileReader = new FileReader();
+    //         fileReader.readAsArrayBuffer(file);
+
+    //         fileReader.onload = (e) =>{
+    //             const bufferArray = e.target.result;
+
+    //             const wb = XLSX.read(bufferArray,{type:"buffer"});
+
+    //             const wsname = wb.SheetNames[0];
+
+    //             const ws = wb.Sheets[wsname];
+
+    //             const data = XLSX.utils.sheet_to_json(ws);
+
+    //             resolve(data);
+    //         };
+
+    //         fileReader.onerror =(error)=>{
+    //             reject(error);
+    //         }
+    //     })
+    //     promise.then(d=>{
+    //         console.log('d',d)
+    //         makeQuestionsObj(d)
+    //     })
+    // }
+
+
     function readExcel(file) {
-        const promise = new Promise((resolve, reject) =>{
-            const fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(file);
-
-            fileReader.onload = (e) =>{
-                const bufferArray = e.target.result;
-
-                const wb = XLSX.read(bufferArray,{type:"buffer"});
-
-                const wsname = wb.SheetNames[0];
-
-                const ws = wb.Sheets[wsname];
-
-                const data = XLSX.utils.sheet_to_json(ws);
-
-                resolve(data);
-            };
-
-            fileReader.onerror =(error)=>{
-                reject(error);
-            }
-        })
-        promise.then(d=>{
-            console.log('d',d)
-            makeQuestionsObj(d)
-        })
+    // Validate file type first
+    if (!file.name.endsWith(".xlsx")) {
+        toast.error("Please upload a valid XLSX file");
+        return;
     }
+
+    const promise = new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file);
+
+        fileReader.onload = (e) => {
+            const bufferArray = e.target.result;
+            const wb = XLSX.read(bufferArray, { type: "buffer" });
+            const wsname = wb.SheetNames[0];
+            const ws = wb.Sheets[wsname];
+            const data = XLSX.utils.sheet_to_json(ws, { defval: "" });
+
+            // Validate headers
+            const expectedHeaders = ["question", "option1", "option2", "option3", "option4", "answer"];
+            const sheetHeaders = XLSX.utils.sheet_to_json(ws, { header: 1 })[0];
+            
+            const isValidFormat = expectedHeaders.every((h, i) => h === sheetHeaders[i]);
+            if (!isValidFormat) {
+                toast.error("Invalid Excel format. Columns must be: question, option1, option2, option3, option4, answer");
+                reject("Invalid format");
+                return;
+            }
+
+            resolve(data);
+        };
+
+        fileReader.onerror = (error) => {
+            reject(error);
+        };
+    });
+
+    promise.then(d => {
+        console.log("Excel data:", d);
+        makeQuestionsObj(d);
+    }).catch(err => console.log(err));
+}
+
 
     function makeQuestionsObj(arr){
         console.log('arr',arr)
@@ -178,7 +223,9 @@ function ExamForm() {
             <br />
             <input type="number" placeholder="exam durations(minutes)" onChange={handleInputChange} name="durations" min="5" max="500" required />
             <br />
-            {/* <label htmlFor="file">upload excel file</label>
+
+
+            <label htmlFor="file">upload excel file</label>
             <br />
             <input type="file" id="file" onChange={(e)=>{
                 const file = e.target.files[0]
@@ -187,7 +234,10 @@ function ExamForm() {
                 }else{
                     window.alert("please upload a valid xlsx file");
                 }
-            }} /> */}
+            }} />
+
+
+
         </form>
         </div>
         <div className="secondForm">

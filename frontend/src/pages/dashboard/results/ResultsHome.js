@@ -12,14 +12,16 @@ function ResultsHome() {
   const getTableDataAsync = useCallback(async ()=>{
     try{
         const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/results`,"",{withCredentials:true});
-        if(res.data.success===true){
-            mapResData(res.data)
+        console.log(res)
+        if(res?.data?.success===true){
+            mapResData(res?.data)
           }else{
             toast.error(`error occured`);
             return false;
           }
     }catch(e){
-        toast.error(`${e.response.data.message}`)
+      console.log(e)
+        //toast.error(`${e?.response?.data?.message}`)
     }
 })
 
@@ -29,21 +31,23 @@ function ResultsHome() {
   
 
  function mapResData(resobj){
+  console.log(resobj)
       setResCount(resobj.totalResults) 
       
-      const newresArr = resobj.results.map(res=>{
+      const newresArr = resobj?.results?.map(res=>{
         const formatDate = new Date(res.createdAt)
         .toLocaleString("en-IN").split(",");
-        return {Examname:res.exam.examcode
-          ,Studentname:res.student.userId,
-         Totalquestions:res.total,
-         Attended:res.attended,
-         Correct:res.correct,
-         Createdat:res.createdAt,
+        return {Examname:res.exam?.examcode
+          ,Studentname:res.student?.userId,
+         Totalquestions:res?.total,
+         Attended:res?.attended,
+         Correct:res?.correct,
+         Createdat:res?.createdAt,
          SubmittedAt:formatDate[1],
-         id:res._id
+         id:res?._id
         }
       })
+      console.log(newresArr)
       setResultData(newresArr);
       setLoading(false);
   }
