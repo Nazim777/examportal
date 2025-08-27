@@ -7,8 +7,8 @@ const fileUplaod = require('express-fileupload');
 const cors = require('cors')
 const app = express();
 const cronJob = require('./config/cron');
-const node_env = process.env.NODE_ENV || "production";
-if (node_env === "production") cronJob.start();
+
+cronJob.start();
 
 if(process.env.NODE_ENV !== 'PRODUCTION'){
     require('dotenv').config();

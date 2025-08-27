@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: my-backend
+    env: node
+    rootDir: backend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run dev"
+    plan: free
+
